@@ -1,0 +1,252 @@
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,600;1,600&family=Dancing+Script:wght@700&display=swap");
+
+body,
+html,
+#root,
+.main-container {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+/* --- ВЪНШЕН СЛОЙ (ЗУМ) --- */
+.external {
+  background-image: url("/background.jpg");
+  z-index: 100;
+  transform-origin: 50% 45%;
+}
+
+@keyframes zoomAndBlackout {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(12);
+    filter: brightness(0);
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.animate-exit-darken {
+  animation: zoomAndBlackout 5s ease-in forwards;
+}
+
+/* --- ВЪТРЕШЕН СЛОЙ (ИНТЕРИОР) --- */
+.internal {
+  background-image: url("/interior.jpeg");
+  z-index: 50;
+  opacity: 0;
+}
+
+.fade-in-from-black {
+  animation: fadeInInternal 3s ease-out 5s forwards;
+}
+
+@keyframes fadeInInternal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* --- КНИГАТА --- */
+.magic-book.single-page {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  height: 85vh;
+  background: #f4e4bc;
+  z-index: 200;
+  opacity: 0;
+  transition: opacity 4s ease-in 9s;
+  box-shadow: inset 0 0 100px rgba(139, 69, 19, 0.5),
+    0 30px 60px rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.fade-in-book {
+  opacity: 1 !important;
+  pointer-events: all !important;
+}
+
+/* СКРОЛЕРЪТ */
+.scrollable-content {
+  width: 100%;
+  height: 100%;
+  padding: 50px 30px 60px 30px; /* По-голям долен padding за четимост */
+  box-sizing: border-box;
+  overflow-y: scroll !important;
+  scrollbar-width: thin;
+  scrollbar-color: #8b4513 #f4e4bc;
+}
+
+.scrollable-content::-webkit-scrollbar {
+  width: 12px;
+  display: block !important;
+}
+.scrollable-content::-webkit-scrollbar-track {
+  background: #f4e4bc;
+}
+.scrollable-content::-webkit-scrollbar-thumb {
+  background-color: #8b4513;
+  border-radius: 10px;
+  border: 3px solid #f4e4bc;
+}
+
+.prologue-title {
+  text-align: center;
+  font-family: "Crimson Text", serif;
+  font-size: 2.5rem;
+  color: #4e342e;
+  margin-bottom: 0.5rem;
+  letter-spacing: 8px;
+}
+
+.prologue-subtitle {
+  text-align: center;
+  font-family: "Dancing Script", cursive;
+  font-size: 1.8rem;
+  color: #5d4037;
+  margin-bottom: 2rem;
+}
+
+.ink-text {
+  font-family: "Dancing Script", cursive;
+  font-size: 1.45rem;
+  color: #2b1d1a;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+/* БЕЛЕЖКИ ПОД ЛИНИЯ */
+.prologue-notes {
+  margin-top: 50px;
+  font-family: "Crimson Text", serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #5d4037;
+  line-height: 1.4;
+  padding-bottom: 40px;
+}
+
+.notes-divider {
+  border: none;
+  border-top: 1px solid #8b4513;
+  width: 30%;
+  margin: 20px 0;
+}
+
+/* --- БРОЯЧЪТ --- */
+.parchment-note {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  width: 200px;
+  height: 140px;
+  background: #f2e1b9;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+  transform: rotate(-3deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 2s ease-in 5s;
+  z-index: 250;
+}
+
+.show-note {
+  opacity: 0.95 !important;
+}
+
+.note-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.note-label {
+  font-family: "Crimson Text", serif;
+  font-size: 14px;
+  color: #4e342e;
+  font-style: italic;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.note-value {
+  font-family: "Dancing Script", cursive;
+  font-size: 48px;
+  color: #2b1d1a;
+  line-height: 1;
+  transition: opacity 0.8s ease-in-out, filter 0.8s ease-in-out;
+}
+
+.parchment-texture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("https://www.transparenttextures.com/patterns/old-map.png");
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.fade-in-ink {
+  opacity: 1;
+  filter: blur(0px);
+}
+.fade-out-ink {
+  opacity: 0;
+  filter: blur(2px);
+}
+
+.dark-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.secret-pixel {
+  position: absolute;
+  top: 25%;
+  left: 18%;
+  width: 8px;
+  height: 8px;
+  background: #ef8100;
+  box-shadow: 0 0 20px #ef8100;
+  cursor: pointer;
+  border-radius: 50%;
+}
