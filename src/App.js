@@ -9,6 +9,7 @@ export default function App() {
   const [activeUsers, setActiveUsers] = useState(() =>
     Math.floor(Math.random() * (999 - 100 + 1) + 100)
   );
+  const [currentPage, setCurrentPage] = useState(1);
   const [isNumberVisible, setIsNumberVisible] = useState(true);
   const audioRef = useRef(null);
 
@@ -65,7 +66,15 @@ export default function App() {
       }, 4000);
     }
   };
-
+  const handleNextPage = () => {
+    const scroller = document.querySelector(".scrollable-content");
+    if (scroller) {
+      scroller.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    setTimeout(() => {
+      setCurrentPage((prev) => prev + 1);
+    }, 1000);
+  };
   return (
     <div className="main-container">
       <audio ref={audioRef} src="/music.mp3" preload="auto" loop />
@@ -83,7 +92,10 @@ export default function App() {
           }`}
         >
           <div className="parchment-texture"></div>
-          <div className="scrollable-content ink-transition" key={language}>
+          <div
+            className="scrollable-content ink-rewrite"
+            key={`${language}-${currentPage}`}
+          >
             <div className="language-picker">
               <div
                 className="current-lang"
@@ -477,6 +489,24 @@ export default function App() {
                       Третата епоха по летописите на елфите и Дунеданците. —
                       Б.а.
                     </p>
+                    <div className="page-navigation">
+                      <div className="ink-divider"></div>
+                      <button
+                        className="next-page-btn"
+                        onClick={handleNextPage}
+                      >
+                        <svg className="runic-arrow" viewBox="0 0 100 100">
+                          <path
+                            d="M20 50 L80 50 M55 25 L80 50 L55 75"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="8"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </>
