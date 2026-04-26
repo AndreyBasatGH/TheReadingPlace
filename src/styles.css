@@ -231,6 +231,28 @@ html,
   font-weight: 700;
   color: #000;
 }
+/* Клас за състоянието, когато цифрата е скрита */
+.fade-out-ink {
+  opacity: 0 !important;
+  filter: blur(2px);
+  transition: opacity 0.8s ease-in-out, filter 0.8s ease-in-out;
+}
+
+/* Клас за състоянието, когато цифрата е видима */
+.fade-in-ink {
+  opacity: 1 !important;
+  filter: blur(0px);
+  transition: opacity 0.8s ease-in-out, filter 0.8s ease-in-out;
+}
+
+/* Модифицирай съществуващия .note-value, за да има преход по подразбиране */
+.note-value {
+  font-size: 42px;
+  font-weight: 700;
+  color: #000;
+  opacity: 1;
+  transition: opacity 0.8s ease-in-out, filter 0.8s ease-in-out;
+}
 
 /* ЕЗИКОВ ПРЕВКЛЮЧВАТЕЛ */
 .language-picker {
