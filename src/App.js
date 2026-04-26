@@ -4,6 +4,8 @@ import "./styles.css";
 export default function App() {
   const [isSecretActive, setIsSecretActive] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
+  const [language, setLanguage] = useState("BG");
+  const [showLangMenu, setShowLangMenu] = useState(false);
   const [activeUsers, setActiveUsers] = useState(() =>
     Math.floor(Math.random() * (999 - 100 + 1) + 100)
   );
@@ -15,7 +17,7 @@ export default function App() {
     const interval = setInterval(() => {
       // 1. Скриваме числото (започва fade-out)
       setIsNumberVisible(false);
-  
+
       setTimeout(() => {
         const randomStep = steps[Math.floor(Math.random() * steps.length)];
         setActiveUsers((prev) => {
@@ -25,8 +27,8 @@ export default function App() {
         // 2. Показваме новото число (започва fade-in)
         setIsNumberVisible(true);
       }, 800); // Изчаква точно 800ms – колкото ще е дълга и CSS анимацията
-    }, 35000); 
-  
+    }, 35000);
+
     return () => clearInterval(interval);
   }, []);
 
@@ -43,13 +45,22 @@ export default function App() {
   const handlePixelClick = () => {
     setIsSecretActive(false);
     setIsEntering(true);
+
     if (audioRef.current) {
       setTimeout(() => {
-        audioRef.current.volume = 0.4;
-        audioRef.current
-          .play()
-          .catch((err) => console.error("Audio error:", err));
-      }, 4000);
+        const audio = audioRef.current;
+        audio.volume = 0; // Започваме от пълна тишина
+        audio.play().catch((err) => console.error("Audio error:", err));
+
+        // Fade-in ефект: на всеки 100ms вдигаме звука по малко
+        let fadeInterval = setInterval(() => {
+          if (audio.volume < 0.4) {
+            audio.volume = Math.min(audio.volume + 0.02, 0.4);
+          } else {
+            clearInterval(fadeInterval);
+          }
+        }, 100);
+      }, 4000); // Запазваме твоето закъснение от 4 секунди
     }
   };
 
@@ -71,6 +82,33 @@ export default function App() {
         >
           <div className="parchment-texture"></div>
           <div className="scrollable-content">
+            {/* Езиков избор */}
+            <div className="language-picker">
+              <div
+                className="current-lang"
+                onClick={() => setShowLangMenu(!showLangMenu)}
+              >
+                {language}
+              </div>
+              {showLangMenu && (
+                <div className="lang-dropdown">
+                  {["BG", "EN", "PL", "RU"]
+                    .filter((l) => l !== language)
+                    .map((lang) => (
+                      <div
+                        key={lang}
+                        className="lang-option"
+                        onClick={() => {
+                          setLanguage(lang);
+                          setShowLangMenu(false);
+                        }}
+                      >
+                        {lang}
+                      </div>
+                    ))}
+                </div>
+              )}
+            </div>
             <h1 className="prologue-title">ПРОЛОГ</h1>
             <h2 className="prologue-subtitle">1. За хобитите</h2>
             <div className="ink-text">
