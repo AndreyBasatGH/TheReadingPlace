@@ -81,7 +81,11 @@ export default function App() {
           }`}
         >
           <div className="parchment-texture"></div>
-          <div className="scrollable-content">
+          <div
+            className={`scrollable-content ${
+              language !== "BG" ? "hide-text" : ""
+            }`}
+          >
             {/* Езиков избор */}
             <div className="language-picker">
               <div
