@@ -11,7 +11,17 @@ export default function App() {
   );
   const [currentPage, setCurrentPage] = useState(1);
   const [isNumberVisible, setIsNumberVisible] = useState(true);
+  const [isFading, setIsFading] = useState(false);
   const audioRef = useRef(null);
+  // --- ЕТО ТУК ПОСТАВИ ФУНКЦИЯТА (СТЪПКА 2) ---
+  const updateCounterWithAnimation = (newValue) => {
+    setIsFading(true);
+    setTimeout(() => {
+      setCounterValue(newValue);
+      setIsFading(false);
+    }, 800);
+  };
+  // --------------------------------------------
 
   useEffect(() => {
     const steps = [4, 7, 11, -4, -7, -11];
