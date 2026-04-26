@@ -261,3 +261,41 @@ html,
   cursor: pointer;
   border-radius: 50%;
 }
+/* --- СТИЛОВЕ ЗА ЕЗИЦИТЕ --- */
+.language-picker {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  z-index: 500;
+  font-family: "Crimson Text", serif;
+}
+
+.current-lang {
+  font-size: 1.2rem;
+  color: #4e342e;
+  cursor: pointer;
+  font-weight: bold;
+  border-bottom: 1px double #8b4513;
+  padding: 2px 8px;
+}
+
+.lang-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #f4e4bc;
+  border: 1px solid #8b4513;
+  box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.3);
+  margin-top: 5px;
+}
+
+.lang-option {
+  padding: 8px 20px;
+  color: #4e342e;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.lang-option:hover {
+  background: #e6d5ac;
+}
